@@ -1,13 +1,36 @@
-const express = require('express');
+const express = require('express')
+    , pug = require('pug')
+    , morgan = require('morgan')
+    , stylus = require('stylus')
+    , nib = require('nib');
 
 var app = express();
 
-app.set('views', __dirname + '../../web');
-app.set('view engine', 'jade');
-app.use(express.logger('dev'));
-app.use(express.static(__dirname + '../../web'));
+function compile(str, path) {
+    return stylus(str)
+        .set('filename', path)
+        .use(nib());
+}
+
+morgan('combined', {
+    skip: function(req, res) { return res.statusCode < 400 }
+});
+
+app.set('views', __dirname + '/../../web');
+app.set('view engine', 'pug');
+app.use(stylus.middleware( {
+    src: __dirname + '/../../web',
+    compile: compile
+}));
+app.use(express.static(__dirname + '/../../web'));
 
 app.get('/', function(req,res) {
-    res.end('Hi there!');
+    res.render('index', {
+        title: 'Potato',
+        message: 'Potato Homepage'
+    });
 });
+
+console.log("Test webserver listening on http://localhost:3000\n"
+          + " or http://127.0.0.1:3000");
 app.listen(3000);
