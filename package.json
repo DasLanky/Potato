@@ -1,0 +1,23 @@
+{
+  "name": "Potato",
+  "version": "1.0.0",
+  "description": "Simple HTTP-enabled file hosting webserver with user database",
+  "main": "index.js",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/DasLanky/Potato.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/DasLanky/Potato/issues"
+  },
+  "homepage": "https://github.com/DasLanky/Potato#readme"
+}
