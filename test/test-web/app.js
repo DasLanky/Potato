@@ -25,6 +25,10 @@ app.use(stylus.middleware( {
 app.use(express.static(__dirname + '/../../web'));
 
 app.get('/', function(req,res) {
+    console.log("Request using "
+              + req.headers.host
+              + " for "
+              + req.url);
     res.render('index', {
         title: 'Potato',
         message: 'Potato Homepage'
