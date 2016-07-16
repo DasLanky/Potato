@@ -4,10 +4,11 @@ const express = require('express')
     , nib = require('nib');
 
 //Custom modules
-const potatoParse = require('../src/parse.js'); //potatoProperties
+var potatoProperties = require('../potato.json');
+var potatoAuth = require('../src/auth/auth.js');
 
-const port = potatoParse.potatoProperties.port
-    , path = potatoParse.potatoProperties.path;
+console.log(potatoProperties);
+console.log(potatoAuth);
 
 //Middleware init
 morgan('combined', {
@@ -24,19 +25,26 @@ app.use(express.static(__dirname + '/../web'));
 //HTML generator engine is pug (Jade)
 app.set('view engine', 'pug');
 
-//Set applet to serve
 app.get('/', function(req,res) {
-    console.log("Request using "
-              + req.headers.host
-              + " for "
-              + req.url);
-    res.render('index', {
-        title: 'Potato',
-        message: 'Potato Homepage'
-    });
+    //console.log(req); //Super verbose
+
+    if (potatoAuth.verify(req)) {
+        res.render('index', {
+            title: 'Potato',
+            message: 'Potato Homepage'
+        });
+    }
+    else {
+        res.render('login', {
+            title: 'Potato Login',
+            message: 'Potato Login'
+        });
+    }
 });
 
 //Listen for incoming connections
-app.listen(port, function() {
-    console.log("Test webserver listening on http://<HostAddress>:" + port + "\n");
+app.listen(potatoProperties.port, function() {
+    console.log("Test webserver listening on http://<HostAddress>:"
+                + potatoProperties.port
+                + "\n");
 });
