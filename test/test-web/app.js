@@ -6,6 +6,8 @@ const express = require('express')
 
 var app = express();
 
+const port = 8080;
+
 function compile(str, path) {
     return stylus(str)
         .set('filename', path)
@@ -16,14 +18,20 @@ morgan('combined', {
     skip: function(req, res) { return res.statusCode < 400 }
 });
 
+//Serve files within the web directory
 app.set('views', __dirname + '/../../web');
+app.use(express.static(__dirname + '/../../web'));
+
+//HTML generator engine is pug (Jade)
 app.set('view engine', 'pug');
+
+//CSS generator engine is Stylus
 app.use(stylus.middleware( {
     src: __dirname + '/../../web',
     compile: compile
 }));
-app.use(express.static(__dirname + '/../../web'));
 
+//Set applet to serve 
 app.get('/', function(req,res) {
     console.log("Request using "
               + req.headers.host
@@ -35,6 +43,7 @@ app.get('/', function(req,res) {
     });
 });
 
-console.log("Test webserver listening on http://localhost:3000\n"
-          + " or http://127.0.0.1:3000");
-app.listen(3000);
+//Listen for incoming connections
+app.listen(port, function() {
+    console.log("Test webserver listenig on http://<HostAddress>:" + port + "\n");
+});
