@@ -1,5 +1,5 @@
 {
-  "name": "Potato",
+  "name": "potato",
   "version": "1.0.0",
   "description": "Simple HTTP-enabled file hosting webserver with user database",
   "main": "index.js",
@@ -14,7 +14,7 @@
     "url": "git+https://github.com/DasLanky/Potato.git"
   },
   "keywords": [],
-  "author": "",
+  "author": "Langston Chandler",
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/DasLanky/Potato/issues"
@@ -26,5 +26,8 @@
     "nib": "^1.1.0",
     "stylus": "^0.54.5"
   },
-  "devDependencies": {}
+  "devDependencies": {},
+  "bin": {
+    "potato": "potato-init.js"
+  }
 }
