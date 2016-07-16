@@ -31,9 +31,9 @@ npm install
 Configure Potato:
 ```
 cd ./path/to/Potato
-gedit potato.properties
-<Change "Port" to an open port>
-<Change "Path" to the absolute base directory for your files>
+gedit potato.json
+<Change "port" value to an open port>
+<Change "path" value to the absolute base directory for your files>
 ```
 
 Run Potato:

@@ -1,22 +1,21 @@
 const express = require('express')
     , pug = require('pug')
     , morgan = require('morgan')
-    , stylus = require('stylus')
     , nib = require('nib');
 
-var app = express();
+//Custom modules
+const potatoParse = require('../src/parse.js'); //potatoProperties
 
-const port = 8080;
+const port = potatoParse.potatoProperties.port
+    , path = potatoParse.potatoProperties.path;
 
-function compile(str, path) {
-    return stylus(str)
-        .set('filename', path)
-        .use(nib());
-}
-
+//Middleware init
 morgan('combined', {
     skip: function(req, res) { return res.statusCode < 400 }
 });
+
+//Create applet
+var app = express();
 
 //Serve files within the web directory
 app.set('views', __dirname + '/../web');
@@ -24,12 +23,6 @@ app.use(express.static(__dirname + '/../web'));
 
 //HTML generator engine is pug (Jade)
 app.set('view engine', 'pug');
-
-//CSS generator engine is Stylus
-app.use(stylus.middleware( {
-    src: __dirname + '/../web',
-    compile: compile
-}));
 
 //Set applet to serve
 app.get('/', function(req,res) {
@@ -45,5 +38,5 @@ app.get('/', function(req,res) {
 
 //Listen for incoming connections
 app.listen(port, function() {
-    console.log("Test webserver listenig on http://<HostAddress>:" + port + "\n");
+    console.log("Test webserver listening on http://<HostAddress>:" + port + "\n");
 });
