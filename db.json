@@ -1,0 +1,12 @@
+{
+    "adminUserName": "potato",
+    "adminPassword": "potato",
+    "users": {
+        "guests": [
+            {
+                "user": "guest",
+                "pass": "guest"
+            }
+        ]
+    }
+}
