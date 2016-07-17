@@ -2,9 +2,10 @@ var db = require('./db/auth-db.js');
 
 module.exports = {
     verify: function(req) {
-        if (!("user" in req) || !("pass" in req)) {
+        if (req.user == undefined || req.pass == undefined) {
             return false;
         }
+        console.log("Verifying authentication from " + req.user);
         if (db.isMatch(req.user, req.pass)) {
             return true;
         }
@@ -12,12 +13,13 @@ module.exports = {
             //Username/password combination invalid
             return false;
         }
-    }
+    },
 
     verifyAdmin: function(req) {
-        if (!("user" in req) || !("pass" in req)) {
+        if (req.user == undefined || req.pass == undefined)  {
             return false;
         }
+        console.log("(admin) Verifying authentication from " + req.user);
         if (db.isAdmin(req.user, req.pass)) {
             return true;
         }

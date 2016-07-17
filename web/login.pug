@@ -3,11 +3,37 @@ html
     head
         style
             include includes/style.css
+
         title Potato
+
+        script(type='text/javascript').
+            function login() {
+                var user = document.getElementById('userInput').value;
+                var pass = document.getElementById('passInput').value;
+                document.location = "login/" + user + "/" + pass;
+            }
 
     body
         include ./includes/header.pug
 
-        h1 LOGIN
+        h1 Login
+
+        p Username:
+
+        input(
+            type='text'
+            id='userInput'
+            name='user'
+        )
+
+        p Password:
+
+        input(
+            type='text'
+            id='passInput'
+            name='pass'
+        )
+
+        div(class="submit", href="login()")
 
         include ./includes/footer.pug

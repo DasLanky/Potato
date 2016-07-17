@@ -31,7 +31,8 @@ app.get('/', function(req,res) {
     if (potatoAuth.verify(req)) {
         res.render('index', {
             title: 'Potato',
-            message: 'Potato Homepage'
+            message: 'Potato Homepage',
+            user: req.user,
         });
     }
     else {
@@ -41,6 +42,30 @@ app.get('/', function(req,res) {
         });
     }
 });
+
+app.get('/login/:user/:pass', function(req, res) {
+    req.user = req.params.user;
+    req.pass = req.params.pass;
+    console.log('User attempted to login with name '
+                + req.user
+                + ' and password '
+                + req.pass);
+    if (potatoAuth.verify(req)) {
+        console.log('\tAuthorized\n');
+        res.render('index', {
+            title: 'Potato',
+            message: 'Potato Homepage',
+            user: req.user
+        });
+    }
+    else {
+        console.log('\tDenied\n');
+        res.render('login', {
+            title: 'Potato Login',
+            message: 'Potato Login'
+        });
+    }
+})
 
 //Listen for incoming connections
 app.listen(potatoProperties.port, function() {
