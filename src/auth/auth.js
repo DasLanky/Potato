@@ -2,30 +2,27 @@ var db = require('./db/auth-db.js');
 
 module.exports = {
     verify: function(req) {
+        console.log("IP to verify: " + req.connection.remoteAddress);
+        //If no user/pass given, verify session
         if (req.user == undefined || req.pass == undefined) {
-            return false;
+            if (req.session == undefined) {
+                console.log("\tSession non-existant");
+                return false;
+            }
+            if (!db.getSession(req.user, req.session)) {
+                 console.log("\tSession not found");
+                 return false;
+            }
+            return true;
         }
-        console.log("Verifying authentication from " + req.user);
+        console.log("\tVerifying login into " + req.user);
         if (db.isMatch(req.user, req.pass)) {
+            //Successful login, create session
+            db.addSession(req.user, req.session);
+            console.log("\tVerified, added session");
             return true;
         }
-        else {
-            //Username/password combination invalid
-            return false;
-        }
-    },
-
-    verifyAdmin: function(req) {
-        if (req.user == undefined || req.pass == undefined)  {
-            return false;
-        }
-        console.log("(admin) Verifying authentication from " + req.user);
-        if (db.isAdmin(req.user, req.pass)) {
-            return true;
-        }
-        else {
-            //Username/password combination invalid
-            return false;
-        }
+        //Incorrect username/password combination
+        return false;
     }
 };

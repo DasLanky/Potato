@@ -1,7 +1,8 @@
 const express = require('express')
     , pug = require('pug')
     , morgan = require('morgan')
-    , nib = require('nib');
+    , nib = require('nib')
+    , session = require('express-session');
 
 //Custom modules
 var potatoProperties = require('../potato.json');
@@ -21,6 +22,12 @@ var app = express();
 //Serve files within the web directory
 app.set('views', __dirname + '/../web');
 app.use(express.static(__dirname + '/../web'));
+
+//Use session middleware
+app.use(session({
+    secret: potatoProperties.sessionSecret,
+    cookie: { maxAge: potatoProperties.timeout }
+}));
 
 //HTML generator engine is pug (Jade)
 app.set('view engine', 'pug');

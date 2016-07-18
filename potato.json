@@ -1,5 +1,7 @@
 {
     "port": 8080,
     "path": "/mnt/sda1/dev/potato/",
-    "userdb": "./db.json"
+    "userdb": "./db.json",
+    "timeout": 18000000,
+    "sessionSecret": "potato"
 }

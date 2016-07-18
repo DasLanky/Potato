@@ -1,12 +1,23 @@
 {
-    "adminUserName": "potato",
-    "adminPassword": "potato",
     "users": {
+        "admins": [
+            {
+                "user": "admin",
+                "pass": "potato"
+            },
+            {
+                "user": "admin2",
+                "pass": "potato2"
+            }
+        ],
         "guests": [
             {
                 "user": "guest",
                 "pass": "guest"
             }
         ]
-    }
+    },
+    "sessions": [
+        
+    ]
 }
