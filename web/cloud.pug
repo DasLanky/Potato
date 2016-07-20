@@ -6,14 +6,26 @@ html
         title Potato Cloud
 
     body
-        include ./includes/header.pug
+        header
+            h1 Potato Cloud
+            include ./includes/header.pug
 
-        p
-            | Directory:
-            =url
-        - for (fileName in fileList)
-            -var link = '/cloud?path=' + url + fileList[fileName] + '&fname=' + fileList[fileName];
-            a(href=link, name="Link")=fileList[fileName]
-            br
+        nav
+            h2 Upload
+            form(action='upload?path=' + url, method='post', enctype='multipart/form-data')
+                input(type="file", value='Choose File', name='newFile')
+                br
+                input(type="submit", value='Upload', name='Submit')
 
-        include ./includes/footer.pug
+        article
+            h2 Download
+            p
+                | Directory:
+                =url
+            - for (fileName in fileList)
+                -var link = '/cloud?path=' + url + fileList[fileName] + '&fname=' + fileList[fileName];
+                a(href=link, name="Link")=fileList[fileName]
+                br
+
+        footer
+            include ./includes/footer.pug

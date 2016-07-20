@@ -14,9 +14,9 @@ html
             }
 
     body
-        include ./includes/header.pug
-
-        h1 Login
+        header
+            h1 Login
+            include ./includes/header.pug
 
         div
           form(action='/login',method='post')
@@ -31,4 +31,5 @@ html
             div(data-role='fieldcontain')
               input(type='submit',value='Login',data-transition='fade', data-theme='c')
 
-        include ./includes/footer.pug
+        footer
+            include ./includes/footer.pug

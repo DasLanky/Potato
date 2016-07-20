@@ -5,7 +5,8 @@ const express = require('express')
     , bodyParser = require('body-parser')
     , cookieParser = require('cookie-parser')
     , fs = require('fs')
-    , mime = require('mime');
+    , mime = require('mime')
+    , formidable = require('formidable');
 
 var properties = require('../potato.json');
 var auth = require('../src/auth.js');
@@ -58,16 +59,25 @@ app.get('/cloud',
     else {
         baseURL = properties.path + "public/";
     }
-    var path = req.param('path').substr(baseURL.length);
+    var path;
+    if (req.param('path') != undefined) {
+        path = req.param('path').substr(baseURL.length);
+    }
+    else {
+        path = '/';
+    }
 
     var fileStats = fs.statSync(baseURL + path);
     if (!fileStats.isDirectory()) {
+        /*
         res.writeHead(200, {
-            'Content-disposition': 'attachment; filename=' + req.params['fname'],
+            'Content-disposition': 'inline; filename="' + req.params['fname'] + '"',
             'Content-type': mime.lookup(baseURL + path)
         });
         var readStream = fs.createReadStream(baseURL + path);
         readStream.pipe(res);
+        */
+        res.sendFile(baseURL + path);
     }
     else {
         var fileList = [];
@@ -124,6 +134,27 @@ app.post('/login', function(req, res) {
             user: req.body.name
         });
     }
+});
+
+app.post('/upload', function(req, res) {
+    verifySession(req, res);
+    var form = new formidable.IncomingForm();
+    form.parse(req, function(err, fields, files) {
+        console.log(fields);
+        console.log(files);
+        fs.readFile(files.newFile.path, function(err, data) {
+            var filePath = req.param('path') + '/' + files.newFile.name;
+            console.log(filePath);
+            fs.writeFile(filePath,
+                         data,
+                         function(err) {
+                if (err) {
+                    console.log(err);
+                }
+                res.redirect('/cloud?path=' + req.param('path'));
+            });
+        });
+    });
 });
 
 app.all('/logout',function(req, res) {
