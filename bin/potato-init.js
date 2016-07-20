@@ -78,8 +78,9 @@ app.post('/login', function(req, res) {
 });
 
 app.all('/logout',function(req, res) {
+    auth.unregister(req);
     req.session.destroy();
-    res.end();
+    res.redirect('/login');
 })
 
 app.get('/loginFailure', function(req, res, next) {

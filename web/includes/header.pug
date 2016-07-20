@@ -1,7 +1,21 @@
-- if (user != null)
-    h1='Welcome back, ' + user + '!'
-- else
-    a(href="/login", name="Login") Login
+mixin space(amt)
+    -for (i = 0; i < amt; i++)
+        =' '
+mixin navbar
+    p
+        a(href="/", name="Home") Home
+        +space(5)
+        - if (user == null)
+            a(href="/login", name="Login") Login
+        - else
+            a(href="/logout", name="Logout") Logout
 
-a(href="/", name="Home") Home
-br
+- if (user != null && user != "guest2")
+    h1='Welcome back, ' + user + '!'
+    +navbar
+- else if (user != null)
+    h1='Hi there, lady!'
+    +navbar
+    img(src="./includes/img/wave.gif", alt="Wave", style="width:300px;height:200px;")
+- else
+    +navbar

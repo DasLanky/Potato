@@ -24,10 +24,16 @@ function newToken(_name, _token) {
     });
 }
 
-module.exports = {
-    newToken: newToken,
-    hasToken: hasToken,
+function removeToken(token) {
+    for (tokenIndex in tokens) {
+        if (tokens[tokenIndex].token == token) {
+            delete tokens[tokenIndex];
+        }
+    }
+    return false;
+}
 
+module.exports = {
     export: function() {
         //Write out to userdb and tokendb
     },
@@ -76,6 +82,10 @@ module.exports = {
 
     register: function(request) {
         newToken(request.body.name, request.session.cookie['connect.sid']);
+    },
+
+    unregister: function(request) {
+        removeToken(request.session.cookie['connect.sid']);
     },
 
     verify: function(request) {
