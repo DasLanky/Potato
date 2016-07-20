@@ -1,6 +1,6 @@
 {
     "port": 8080,
-    "path": "/mnt/sda1/dev/potato/",
+    "path": "/media/",
     "userdb": "../db/userdb.json",
     "tokendb": "../db/tokendb.json",
     "timeout": 18000000,

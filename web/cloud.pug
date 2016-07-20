@@ -1,0 +1,19 @@
+doctype html
+html
+    head
+        style
+            include includes/style.css
+        title Potato Cloud
+
+    body
+        include ./includes/header.pug
+
+        p
+            | Directory:
+            =url
+        - for (fileName in fileList)
+            -var link = '/cloud?path=' + url + fileList[fileName] + '&NEW=' + fileList[fileName];
+            a(href=link, name="Link")=fileList[fileName]
+            br
+
+        include ./includes/footer.pug

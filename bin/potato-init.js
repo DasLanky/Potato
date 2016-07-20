@@ -3,7 +3,9 @@ const express = require('express')
     , nib = require('nib')
     , session = require('express-session')
     , bodyParser = require('body-parser')
-    , cookieParser = require('cookie-parser');
+    , cookieParser = require('cookie-parser')
+    , fs = require('fs')
+    , mime = require('mime');
 
 var properties = require('../potato.json');
 var auth = require('../src/auth.js');
@@ -45,11 +47,59 @@ app.get('/',
     });
 });
 
+app.get('/cloud',
+    function(req, res) {
+    verifySession(req, res);
+    var name = auth.getName(req);
+    var baseURL;
+    if (name == "admin") {
+        baseURL = properties.path;
+    }
+    else {
+        baseURL = properties.path + "public/";
+    }
+    var path = req.param('path').substr(1);
+
+    var fileStats = fs.statSync(baseURL + path);
+    if (!fileStats.isDirectory()) {
+        res.writeHead(200, {
+            'Content-disposition': 'attachment; filename=' + req.params['fname'],
+            'Content-type': mime.lookup(baseURL + path)
+        });
+        var readStream = fs.createReadStream(baseURL + path);
+        readStream.pipe(res);
+    }
+    else {
+        var fileList = [];
+        fs.readdir(baseURL + path, function(err, files) {
+            if (err) {
+                console.log(err);
+                return;
+            }
+            for (fileIndex in files) {
+                var fileName = files[fileIndex];
+                var stats = fs.statSync(baseURL + path + fileName);
+                if (stats.isDirectory()) {
+                    fileName = fileName + '/';
+                }
+                fileList.push(fileName);
+            }
+            res.render('cloud', {
+                title: 'Potato Cloud',
+                message: 'Potato Cloud',
+                user: auth.getName(req),
+                url: baseURL + path,
+                fileList: fileList
+            });
+        });
+    }
+});
+
 app.get('/login',
     function(req,res) {
     res.render('login', {
-        title: 'Potato',
-        message: 'Potato Homepage',
+        title: 'Potato Login',
+        message: 'Potato Login',
     });
 });
 
