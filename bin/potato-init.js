@@ -58,7 +58,7 @@ app.get('/cloud',
     else {
         baseURL = properties.path + "public/";
     }
-    var path = req.param('path').substr(1);
+    var path = req.param('path').substr(baseURL.length());
 
     var fileStats = fs.statSync(baseURL + path);
     if (!fileStats.isDirectory()) {
