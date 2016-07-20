@@ -34,7 +34,7 @@ cd ./path/to/Potato
 gedit potato.json
 <Change "port" value to an open port>
 <Change "path" value to the absolute base directory for your files>
-<Change "userdb" value to the absolute path of the user database>
+<Make sure that your path includes an internal "public" directory>
 ```
 
 Run Potato:

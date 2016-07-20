@@ -12,7 +12,7 @@ html
             | Directory:
             =url
         - for (fileName in fileList)
-            -var link = '/cloud?path=' + url + fileList[fileName] + '&NEW=' + fileList[fileName];
+            -var link = '/cloud?path=' + url + fileList[fileName] + '&fname=' + fileList[fileName];
             a(href=link, name="Link")=fileList[fileName]
             br
 

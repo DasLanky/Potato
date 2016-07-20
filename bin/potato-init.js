@@ -58,7 +58,7 @@ app.get('/cloud',
     else {
         baseURL = properties.path + "public/";
     }
-    var path = req.param('path').substr(baseURL.length());
+    var path = req.param('path').substr(baseURL.length);
 
     var fileStats = fs.statSync(baseURL + path);
     if (!fileStats.isDirectory()) {
@@ -104,7 +104,6 @@ app.get('/login',
 });
 
 app.post('/login', function(req, res) {
-    console.log(req.cookies);
     console.log("User login with name " + req.body.name
               + " and password " + req.body.pass);
     if (!auth.hasUser(req.body.name)) {

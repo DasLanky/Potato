@@ -74,21 +74,21 @@ module.exports = {
         var token;
         for (tokenName in tokens) {
             token = tokens[tokenName];
-            if (token.token == request.session.cookie['connect.sid']) {
+            if (token.token == request.cookies['connect.sid']) {
                 return token.name;
             }
         }
     },
 
     register: function(request) {
-        newToken(request.body.name, request.session.cookie['connect.sid']);
+        newToken(request.body.name, request.cookies['connect.sid']);
     },
 
     unregister: function(request) {
-        removeToken(request.session.cookie['connect.sid']);
+        removeToken(request.cookies['connect.sid']);
     },
 
     verify: function(request) {
-        return hasToken(request.session.cookie['connect.sid']);
+        return hasToken(request.cookies['connect.sid']);
     }
 }
