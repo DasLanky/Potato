@@ -1,0 +1,18 @@
+{
+    "admins": [
+        {
+            "name": "admin",
+            "pass": "potato"
+        },
+        {
+            "name": "admin2",
+            "pass": "potato2"
+        }
+    ],
+    "guests": [
+        {
+            "name": "guest",
+            "pass": "guest"
+        }
+    ]
+}
