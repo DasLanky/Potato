@@ -1,18 +1,39 @@
 {
-    "admins": [
-        {
-            "name": "admin",
-            "pass": "potato"
-        }
-    ],
-    "guests": [
-        {
-            "name": "guest",
-            "pass": "guest"
-        },
-        {
-            "name": "guest2",
-            "pass": "guest2"
-        }
-    ]
+    "admins": {
+        "permissions": [
+            "download",
+            "upload",
+            "delete",
+            "private-view"
+        ],
+        "users": [
+            {
+                "name": "admin",
+                "pass": "potato"
+            }
+        ]
+    },
+    "superUsers": {
+        "permissions": [
+            "download",
+            "private-view"
+        ],
+        "users": [
+            {
+                "name": "superUser",
+                "pass": "superUser"
+            }
+        ]
+    },
+    "guests": {
+        "permissions": [
+            "download"
+        ],
+        "users": [
+            {
+                "name": "guest",
+                "pass": "guest"
+            }
+        ]
+    }
 }

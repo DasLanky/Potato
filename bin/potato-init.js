@@ -38,6 +38,18 @@ function verifySession(req, res) {
     }
 }
 
+function verifyPermission(req, res, permission, redirect) {
+    var name = auth.getName(req);
+    if (!hasPermission.hasPermission(name, permission)) {
+        res.redirect(redirect);
+    }
+}
+
+function checkPermission(req, permission) {
+    var name = auth.getName(req);
+    return auth.hasPermission(name, permission);
+}
+
 app.get('/',
     function(req, res) {
     verifySession(req, res);
@@ -53,7 +65,7 @@ app.get('/cloud',
     verifySession(req, res);
     var name = auth.getName(req);
     var baseURL;
-    if (name == "admin") {
+    if (checkPermission(req, "private-view")) {
         baseURL = properties.path;
     }
     else {
@@ -77,7 +89,9 @@ app.get('/cloud',
         var readStream = fs.createReadStream(baseURL + path);
         readStream.pipe(res);
         */
-        res.sendFile(baseURL + path);
+        if (auth.hasPermission(name, "download")) {
+            res.sendFile(baseURL + path);
+        }
     }
     else {
         var fileList = [];
@@ -138,6 +152,7 @@ app.post('/login', function(req, res) {
 
 app.post('/upload', function(req, res) {
     verifySession(req, res);
+    verifyPermission(req, res, "upload", "/cloud");
     var form = new formidable.IncomingForm();
     form.parse(req, function(err, fields, files) {
         console.log(fields);

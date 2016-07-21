@@ -42,8 +42,10 @@ module.exports = {
         var type, user;
         for (typeName in users) {
             type = users[typeName];
-            for (userName in type) {
-                user = type[userName];
+            for (userName in type.users) {
+                user = type.users[userName];
+                console.log(userName);
+                console.log(user);
                 if (user.name == name) {
                     return true;
                 }
@@ -56,14 +58,33 @@ module.exports = {
         var type, user;
         for (typeName in users) {
             type = users[typeName];
-            for (userName in type) {
-                user = type[userName];
+            for (userName in type.users) {
+                user = type.users[userName];
                 console.log(user);
                 if (user.name == name) {
                     if (user.pass == pass) {
                         return true;
                     }
                     return false;
+                }
+            }
+        }
+        return false;
+    },
+
+
+    hasPermission: function(name, permission) {
+        var type, user;
+        for (typeName in users) {
+            type = users[typeName];
+            if (type.permissions.indexOf(permission) == -1) {
+                continue;
+            }
+            for (userName in type.users) {
+                user = type.users[userName];
+                console.log(user);
+                if (user.name == name) {
+                    return true;
                 }
             }
         }
