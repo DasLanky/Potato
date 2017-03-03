@@ -40,7 +40,7 @@ function verifySession(req, res) {
 
 function verifyPermission(req, res, permission, redirect) {
     var name = auth.getName(req);
-    if (!hasPermission.hasPermission(name, permission)) {
+    if (!auth.hasPermission(name, permission)) {
         res.redirect(redirect);
     }
 }
