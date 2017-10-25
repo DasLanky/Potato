@@ -1,10 +1,11 @@
 # Potato
-#####Simple HTTP-enabled file hosting webserver with user database
-Coded in Node.js Express using Pug/Jade for HTML and Stylus for CSS
+##### Simple HTTP-enabled file hosting webserver with user database
 
-##Installation
+Written in Node.js Express using Pug/Jade for HTML and Stylus for CSS
 
-#####Linux
+## Installation
+
+##### Linux
 
 Install required packages (assuming root):
 ```
@@ -24,9 +25,9 @@ cd ./path/to/Potato
 npm install
 ```
 
-##Running Potato webserver
+## Running Potato webserver
 
-#####Linux
+##### Linux
 
 Configure Potato:
 ```
